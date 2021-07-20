@@ -1,12 +1,9 @@
 <?php include 'functions.php';?>
 <?php
-
-    if(isset($_POST['submit'])) {
-        $username = $_POST['username'];
-        $password = $_POST['password'];
-        addUser($username, $password);
+    if(isset($_POST['delete'])) {
+        $id=$_POST['id'];
+        deleteUser($id);
     }
-
 ?>
 <!doctype html>
 <html lang="en">
@@ -21,23 +18,28 @@
 <body>
 <div class="container">
     <div class="col-xs-6">
-    <form action="create.php" method="post">
+        <form action="delete.php" method="post">
+            <div class="form-group">
+                <select name="id">
 
-            <div class="form-group">
-                <label for="username">Username</label><br>
-                <input type="text" name ="username" class="form-group">
+                <?php
+                foreach(getList() as $item) {
+                    echo "<option value='{$item['id']}'>{$item['name']}</option>";
+                }
+                ?>
+
+                </select>
+
             </div>
             <div class="form-group">
-                <label for="password">Password</label><br>
-                <input type="password" name="password" class="form-group"><br>
-            </div>
-            <div class="form-group">
-                <input type="submit" name="submit" value="Submit" class="btn btn-primary">
+                <input type="submit" class="btn btn-primary" value="Delete" name="delete">
             </div>
 
-    </form>
+
+
+        </form>
     </div>
-</div>
 
+</div>
 </body>
 </html>

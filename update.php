@@ -1,20 +1,11 @@
-<?php include 'db.php';?>
+<?php include 'functions.php'; ?>
 <?php
-    if(isset($_POST['update']))
-    {
-        $username=$_POST['username'];
-        $password=$_POST['password'];
-        $id=$_POST['id'];
-        global $connection;
-        $query="UPDATE login SET ";
-        $query.="username='$username', ";
-        $query.="password='$password' ";
-        $query.="Where id=$id";
-        $result = mysqli_query($connection, $query);
-    }
-
-
-
+if (isset($_POST['update'])) {
+    $username = $_POST['username'];
+    $password = $_POST['password'];
+    $id = $_POST['id'];
+    updateUser($username, $password, $id);
+}
 ?>
 <!doctype html>
 <html lang="en">
@@ -23,7 +14,8 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <title>Document</title>
 </head>
 <body>
@@ -40,15 +32,9 @@
             </div>
             <div class="from-group">
                 <select name="id" id="">
-
                     <?php
-                    global $connection;
-                    $query="SELECT * FROM login";
-                    $result=mysqli_query($connection, $query);
-                    while($row=mysqli_fetch_assoc($result))
-                    {
-                     $id=$row['id'];
-                     echo "<option value='$id'>$id</option>";
+                    foreach (getList() as $item) {
+                        echo "<option value='{$item['id']}'>{$item['name']}</option>";
                     }
                     ?>
                 </select>

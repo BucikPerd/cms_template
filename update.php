@@ -1,4 +1,21 @@
 <?php include 'db.php';?>
+<?php
+    if(isset($_POST['update']))
+    {
+        $username=$_POST['username'];
+        $password=$_POST['password'];
+        $id=$_POST['id'];
+        global $connection;
+        $query="UPDATE login SET ";
+        $query.="username='$username', ";
+        $query.="password='$password' ";
+        $query.="Where id=$id";
+        $result = mysqli_query($connection, $query);
+    }
+
+
+
+?>
 <!doctype html>
 <html lang="en">
 <head>
@@ -26,7 +43,8 @@
 
                     <?php
                     global $connection;
-                    $result = mysqli_query($connection, "SELECT * FROM login");
+                    $query="SELECT * FROM login";
+                    $result=mysqli_query($connection, $query);
                     while($row=mysqli_fetch_assoc($result))
                     {
                      $id=$row['id'];

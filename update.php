@@ -1,11 +1,14 @@
 <?php include 'functions.php'; ?>
 <?php
+session_start();
 if (isset($_POST['update'])) {
     $username = $_POST['username'];
     $password = $_POST['password'];
     $id = $_POST['id'];
     updateUser($username, $password, $id);
+
 }
+//echo $_SESSION['podsos'];
 ?>
 <!doctype html>
 <html lang="en">

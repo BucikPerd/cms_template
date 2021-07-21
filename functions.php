@@ -1,6 +1,5 @@
 <?php
-function getConnection(): mysqli
-{
+function getConnection(): mysqli {
     $connection = mysqli_connect('localhost', 'admin', '12345678', 'test');
     if (!$connection) {
         die(mysqli_error($connection));
@@ -8,10 +7,9 @@ function getConnection(): mysqli
     return $connection;
 }
 
-function getList(): array
-{
+function getList(): array {
     $connection = getConnection();
-    $result = mysqli_query($connection, "SELECT * FROM login");
+    $result=$connection->query("SELECT * FROM login");
     $items = [];
     while ($row = mysqli_fetch_assoc($result)) {
         $item = [
@@ -23,28 +21,31 @@ function getList(): array
     return $items;
 }
 
-function deleteUser($id)
-{
+function deleteUser($id) {
     $connection = getConnection();
+    $connection->real_escape_string($id);
     $mysqlQueryDelete = "DELETE FROM login ";
     $mysqlQueryDelete .= "WHERE id =$id";
-    mysqli_query($connection, $mysqlQueryDelete);
+    $connection->query($mysqlQueryDelete);
 }
 
-function addUser($username, $password)
-{
+function addUser($username, $password) {
     $connection = getConnection();
+    $connection->real_escape_string($username);
+    $connection->real_escape_string($password);
     $mysqlQueryCreate = "INSERT INTO login(username, password) ";
     $mysqlQueryCreate .= "VALUES ('$username', '$password')";
-    mysqli_query($connection, $mysqlQueryCreate);
+    $connection->query($mysqlQueryCreate);
 }
 
-function updateUser($username, $password, $id)
-{
+function updateUser($username, $password, $id) {
     $connection = getConnection();
+    $connection->real_escape_string($username);
+    $connection->real_escape_string($password);
+    $connection->real_escape_string($id);
     $query = "UPDATE login SET ";
     $query .= "username='$username', ";
     $query .= "password='$password' ";
     $query .= "WHERE id=$id";
-    mysqli_query($connection, $query);
+    $connection->query($query);
 }
